@@ -7,9 +7,9 @@
 #define WIDTH 640
 #define HEIGHT 1136
 
-#define NEIGHBOURS_COUNT 4
+#define NEIGHBOURS_COUNT 8
 #define DEFAULT_COLORS_COUNT 14
-#define NUM_LAYERS 100
+#define NUM_LAYERS 10000
 #define NUM_TOUCHES 5
 
 class ofApp : public ofxiOSApp {
@@ -34,6 +34,7 @@ public:
     struct neighbour hasNeighbours(int x, int y);
     void wakeNeighbours(int x, int y);
     void wakeNeighbours(int x, int y, bool force);
+    void dryNeighbours(int x, int y);
     void addSpec(int x, int y, int layer, int force);
     void reset();
     
@@ -41,11 +42,11 @@ public:
         {0,-1},
         {-1,0},
         {1,0},
-        {0,1}/*,
+        {0,1},
         {-1,-1},
         {1,-1},
         {-1,1},
-        {1,1}*/
+        {1,1}
     };
     
     float neighbourStrength[NEIGHBOURS_COUNT];
