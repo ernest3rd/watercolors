@@ -88,8 +88,11 @@ void ofApp::update(){
     for (int y = 0; y < HEIGHT; y++) {
         for (int x = 0; x < WIDTH; x++) {
             if(!pawake[x][y]) {
-                //img.setColor(x, y, defaultColors[0]);
+                img.setColor(x, y, defaultColors[0]);
                 continue;
+            }
+            else{
+                img.setColor(x, y, defaultColors[1]);
             }
             dryNeighbours(x, y);
             neighbour nb = hasNeighbours(x, y);
@@ -101,7 +104,7 @@ void ofApp::update(){
                     pforce[x][y] = nb.force;
                     col.setBrightness(nb.force);
                     col = img.getColor(x,y).getLerped(layers[nb.layer % NUM_LAYERS], nb.force/2550.0);
-                    img.setColor(x, y, col);
+                    //img.setColor(x, y, col);
                     wakeNeighbours(x, y);
                 }
                 else{
@@ -171,8 +174,7 @@ void ofApp::dryNeighbours(int x, int y){
         dy = neighbours[i][1];
         if(x+dx >= 0 && x+dx < WIDTH && y+dy >= 0 && y+dy < HEIGHT){
             if(pforce[x+dx][y+dy] > 0){
-                //pforce[x+dx][y+dy] = int(pforce[x+dx][y+dy] * 0.999);
-                pforce[x+dx][y+dy] -= 1.0/float(pforce[x+dx][y+dy]) * ofRandom(20);
+                pforce[x+dx][y+dy] -= 1.0/float(pforce[x+dx][y+dy]) * ofRandom(2000);
                 if(pforce[x+dx][y+dy] < 0){
                     pforce[x+dx][y+dy] = 0;
                 };
@@ -192,7 +194,7 @@ void ofApp::addSpec(int x, int y, int layer, int force){
                     pcolors[vx][vy] = layer;
                     pforce[vx][vy] = force;
                     pawake[vx][vy] = false;
-                    wakeNeighbours(vx,vy, true);
+                    wakeNeighbours(vx,vy);
                     img.setColor(vx,vy,layers[layer % NUM_LAYERS]);
                 }
             }
